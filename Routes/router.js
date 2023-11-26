@@ -1,10 +1,20 @@
 const express=require('express')
 const router=new express.Router()
 const userController=require('../Controllers/userController')
+const productController=require('../Controllers/productController')
+const jwtMiddleWare = require('../Middlewares/jwtMiddleWare')
+const multerConfig = require('../Middlewares/multerMiddleware')
 
 // register API
 router.post('/users/register',userController.register)
-
+// login API
+router.post('/users/login',userController.login)
+// add product
+router.post('/products/add',jwtMiddleWare,multerConfig.single('productImage'),productController.addProducts)
+// get user products
+router.get('/products/user-products',jwtMiddleWare,productController.allUserProducts)
+// get all products
+router.get('/products/all-products',productController.getAllProducts)
 
 // export router
 module.exports=router

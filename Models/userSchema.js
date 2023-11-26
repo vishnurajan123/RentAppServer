@@ -26,8 +26,8 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    dob:{
-        type:String,
+    phone:{
+        type:Number,
         required:true
     },
     profile:{
