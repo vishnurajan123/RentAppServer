@@ -32,11 +32,53 @@ exports.allUserProducts=async (req,res)=>{
 
 // getAllProducts
 exports.getAllProducts=async (req,res)=>{
+    const searchKey=req.query.search
+    const searchLoc=req.query.loc
+    const query={
+        category:{$regex:searchKey , $options:"i"},
+        loc:{$regex:searchLoc , $options:"i"}
+
+    }
     try{
-        const allProducts=await products.find()
+        const allProducts=await products.find(query)
         res.status(200).json(allProducts)
     }
     catch(err){
+        res.status(401).json(err)
+    }
+}
+
+// update product
+exports.editProducts=async (req,res)=>{
+    // get edit product details
+    const {id}=req.params
+    const userId=req.payload
+    const { title,category,overview,rent,place,contact,loc,productImage}=req.body
+    const uploadProductImage=req.file?req.file.filename:productImage
+
+    try{
+        const updateProduct=await products.findByIdAndUpdate({_id:id},{
+            title,category,overview,rent,place,contact,loc,productImage:uploadProductImage,userId
+        },{new:true})
+        await updateProduct.save()
+        res.status(200).json(updateProduct)
+    }
+    catch(err){
+        res.status(401).json(err)
+    }
+
+
+}
+
+// delete product
+exports.deleteProductController=async (req,res)=>{
+    // get product details
+    const {id}=req.params
+    try{
+        const removeProduct=await products.findByIdAndDelete({_id:id})
+        res.status(200).json(removeProduct)
+    }
+    catch (err){
         res.status(401).json(err)
     }
 }

@@ -11,6 +11,7 @@ const rentServer=express()
 rentServer.use(cors())
 rentServer.use(express.json())
 rentServer.use(router)
+rentServer.use('/uploads',express.static('./uploads'))
 
 const PORT=4000 || process.env.PORT
 rentServer.listen(PORT,()=>{
