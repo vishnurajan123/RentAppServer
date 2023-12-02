@@ -16,7 +16,12 @@ const ratingSchema=new mongoose.Schema({
     userId:{
         type:String,
         required:true
+    },
+    username:{
+        type:String,
+        required:true
     }
+   
 })
 
 const ratings=mongoose.model("ratings",ratingSchema)
