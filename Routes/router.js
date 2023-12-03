@@ -37,6 +37,8 @@ router.delete('/requests/remove/:id',jwtMiddleWare,requestController.deleteReque
 router.post('/chat/addchat',jwtMiddleWare,chatController.addChatController)
 // get chat
 router.get('/chat/getchat',chatController.getMessages)
+// update user
+router.put('/users/update',jwtMiddleWare,multerConfig.single("profile"),userController.editUserController)
 
 // export router
 module.exports=router

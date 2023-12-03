@@ -46,3 +46,21 @@ exports.login=async (req,res)=>{
         res.status(401).json(`Login API Failed , Error: ${err}`)
     }
 }
+// update user
+exports.editUserController=async(req,res)=>{
+    // get edit user details
+   const userId=req.payload
+   const {username,email,password,place,phone,profile}=req.body
+   const uploadUserImage=req.file?req.file.filename:profile
+   
+   try{
+    const updateUser=await users.findByIdAndUpdate({_id:userId},{
+        username,email,password,place,phone,profile:uploadUserImage
+    },{new:true})
+    await updateUser.save()
+    res.status(200).json(updateUser)
+   }
+   catch(err){
+    res.status(401).json(err)
+   }
+}
