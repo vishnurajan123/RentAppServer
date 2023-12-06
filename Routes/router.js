@@ -5,6 +5,7 @@ const productController=require('../Controllers/productController')
 const ratingController=require('../Controllers/ratingController')
 const requestController=require('../Controllers/requestController')
 const chatController=require('../Controllers/chatController')
+const wishlistController=require('../Controllers/wishListController')
 const jwtMiddleWare = require('../Middlewares/jwtMiddleWare')
 const multerConfig = require('../Middlewares/multerMiddleware')
 
@@ -39,6 +40,11 @@ router.post('/chat/addchat',jwtMiddleWare,chatController.addChatController)
 router.get('/chat/getchat',chatController.getMessages)
 // update user
 router.put('/users/update',jwtMiddleWare,multerConfig.single("profile"),userController.editUserController)
-
+// add to wishlist
+router.post('/wishlists/add',jwtMiddleWare,wishlistController.addWishlistController)
+// get wishlist
+router.get('/wishlists/get',jwtMiddleWare,wishlistController.getWishlist)
+// delete wishlist
+router.delete('/wishlists/delete/:id',jwtMiddleWare,wishlistController.deleteWishlistController)
 // export router
 module.exports=router
