@@ -35,8 +35,8 @@ exports.getAllProducts=async (req,res)=>{
     const searchKey=req.query.search
     const searchLoc=req.query.loc
     const query={
-        category:{$regex:searchKey , $options:"i"},
-        loc:{$regex:searchLoc , $options:"i"}
+        title:{$regex:searchKey , $options:"i"},
+        place:{$regex:searchLoc , $options:"i"}
 
     }
     try{
