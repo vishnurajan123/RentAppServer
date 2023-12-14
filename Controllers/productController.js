@@ -3,12 +3,11 @@ const products=require('../Models/productSchema')
 // add product
 exports.addProducts=async(req,res)=>{
     console.log("Inside ad products function");
-    const userId=req.payload
     const productImage=req.file.filename
-    const {title,category,overview,rent,place,contact,loc}=req.body
+    const {title,category,overview,rent,place,contact,loc,userId}=req.body
     try{
         const newProduct=new products({
-            title,category,overview,rent,place,contact,loc,productImage,userId
+            title,category,overview,rent,place,contact,loc,productImage,userId,status:"pending"
         })
         await newProduct.save()
         res.status(200).json(newProduct)
@@ -52,13 +51,12 @@ exports.getAllProducts=async (req,res)=>{
 exports.editProducts=async (req,res)=>{
     // get edit product details
     const {id}=req.params
-    const userId=req.payload
-    const { title,category,overview,rent,place,contact,loc,productImage}=req.body
+    const { title,category,overview,rent,place,contact,loc,productImage,userId,status}=req.body
     const uploadProductImage=req.file?req.file.filename:productImage
 
     try{
         const updateProduct=await products.findByIdAndUpdate({_id:id},{
-            title,category,overview,rent,place,contact,loc,productImage:uploadProductImage,userId
+            title,category,overview,rent,place,contact,loc,productImage:uploadProductImage,userId,status
         },{new:true})
         await updateProduct.save()
         res.status(200).json(updateProduct)
